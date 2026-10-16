@@ -1,0 +1,4 @@
+Summary,Issue Type,Epic Name,Epic Link,Description,Assignee,Labels,Due Date
+Prueba de automatizacion,Epic,Prueba de automatizacion,,"Epica de prueba para validar el workflow de GitHub Actions. Se puede borrar.",Ruby Alvarez,prueba,2026-10-25
+Prueba 1: crear tarea desde CSV,Task,,Prueba de automatizacion,"Verifica que el workflow crea una tarea con descripcion, etiqueta y fecha.",Ruby Alvarez,prueba;gitops,2026-10-17
+Prueba 2: tarea sin responsable,Task,,Prueba de automatizacion,"Responsable inexistente: debe crearse sin asignar y avisar en el log.",Persona Inexistente,prueba,2026-10-18
