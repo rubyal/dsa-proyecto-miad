@@ -1,0 +1,28 @@
+Summary,Issue Type,Epic Name,Epic Link,Description,Assignee,Labels,Due Date
+Entrega 1,Epic,Entrega 1,,"Reporte (max. 10 pags.) y soportes: problema, pregunta de negocio, datasets, repos Git y DVC, EDA, maqueta y reporte de trabajo en equipo. Entrega: domingo 25 oct.",Ruby Alvarez,entrega1,2026-10-25
+Listar 3 posibles problemas con dataset publico (Ruby),Task,,Entrega 1,"Proponer 3 problemas con su pregunta de negocio y dataset publico. Criterio: enlace al dataset y confirmacion de disponibilidad.",Ruby Alvarez,definicion,2026-10-16
+Listar 3 posibles problemas con dataset publico (Laura),Task,,Entrega 1,"Proponer 3 problemas con su pregunta de negocio y dataset publico. Criterio: enlace al dataset y confirmacion de disponibilidad.",Laura Vasquez Cadena,definicion,2026-10-16
+Listar 3 posibles problemas con dataset publico (Jorge),Task,,Entrega 1,"Proponer 3 problemas con su pregunta de negocio y dataset publico. Criterio: enlace al dataset y confirmacion de disponibilidad.",Jorge H,definicion,2026-10-16
+Elegir problema y verificar disponibilidad de datos,Task,,Entrega 1,"Reunion de equipo para decidir. Criterio: decision documentada en el README.",Ruby Alvarez,definicion,2026-10-17
+Crear repo GitHub con ramas main y dev protegidas,Task,,Entrega 1,"Crear repo, rama dev (por defecto), reglas de proteccion en main y dev, auto-borrado de ramas. Criterio: nadie puede hacer push directo.",Ruby Alvarez,gitops,2026-10-17
+"Configurar estructura de carpetas, README y CODEOWNERS",Task,,Entrega 1,"Estructura por dueno de carpeta, README con cheat sheet de comandos, plantilla de PR y CODEOWNERS.",Ruby Alvarez,gitops,2026-10-18
+Configurar remoto DVC compartido,Task,,Entrega 1,"Remoto DVC accesible para los tres. Criterio: dvc pull funciona para Laura y Jorge.",Ruby Alvarez,gitops;datos,2026-10-18
+Configurar CI en GitHub Actions (PR a dev y main),Task,,Entrega 1,"Lint y dvc status en cada PR hacia dev y main.",Ruby Alvarez,gitops,2026-10-19
+Integrar Jira con GitHub,Task,,Entrega 1,"Codigo de tarea en nombre de rama y commits. Criterio: los PRs se ven en las tareas de Jira.",Ruby Alvarez,gitops,2026-10-19
+Sesion en vivo del flujo Git y DVC (45 min),Task,,Entrega 1,"Recorrido completo: clone, dvc pull, rama desde dev, dvc add, commit, push, PR, revision, merge.",Ruby Alvarez,gitops,2026-10-19
+PR de bienvenida (Laura),Task,,Entrega 1,"README propio en su carpeta + un archivo pequeno versionado con DVC, via PR a dev.",Laura Vasquez Cadena,gitops,2026-10-19
+PR de bienvenida (Jorge),Task,,Entrega 1,"README propio en su carpeta + un archivo pequeno versionado con DVC, via PR a dev.",Jorge H,gitops,2026-10-19
+"Redactar problema, contexto, pregunta de negocio y alcance",Task,,Entrega 1,"Seccion 1 del reporte.",Ruby Alvarez,reporte;definicion,2026-10-19
+Subir y versionar datasets en DVC,Task,,Entrega 1,"Dataset principal y complementarios documentados (fuente, licencia, esquema). Criterio: archivos .dvc en dev.",Jorge H,datos,2026-10-20
+Maqueta inicial del tablero,Task,,Entrega 1,"Maqueta con elementos y su relacion con la pregunta de negocio.",Laura Vasquez Cadena,tablero,2026-10-20
+EDA calidad de datos y pipeline de limpieza,Task,,Entrega 1,"Nulos, duplicados, tipos, outliers y stage de limpieza en dvc.yaml. Notebook propio.",Ruby Alvarez,eda;datos,2026-10-21
+EDA variable objetivo y modelo candidato,Task,,Entrega 1,"Analisis univariado, variable objetivo, modelo candidato y metricas. Notebook propio.",Jorge H,eda;modelos,2026-10-21
+EDA relaciones entre variables y visualizaciones,Task,,Entrega 1,"Relaciones entre variables y graficas para la maqueta. Notebook propio.",Laura Vasquez Cadena,eda;tablero,2026-10-21
+Ajustar maqueta con hallazgos del EDA,Task,,Entrega 1,"Iterar la maqueta segun lo encontrado en los datos.",Laura Vasquez Cadena,tablero,2026-10-22
+Seccion del reporte: calidad de datos y definicion,Task,,Entrega 1,"Redactar en reports/seccion_ruby.md.",Ruby Alvarez,reporte,2026-10-23
+Seccion del reporte: datos y modelado,Task,,Entrega 1,"Redactar en reports/seccion_jorge.md.",Jorge H,reporte,2026-10-23
+Seccion del reporte: exploracion y maqueta,Task,,Entrega 1,"Redactar en reports/seccion_laura.md.",Laura Vasquez Cadena,reporte,2026-10-23
+Reporte de trabajo en equipo (aportes individuales),Task,,Entrega 1,"Cada integrante anota lo que hizo, coherente con sus commits.",Ruby Alvarez,reporte,2026-10-23
+Revision cruzada y unificacion del reporte,Task,,Entrega 1,"Unificar secciones, verificar limite de 10 paginas.",Laura Vasquez Cadena,reporte,2026-10-24
+PR dev a main y etiqueta entrega-1,Task,,Entrega 1,"Merge commit (no squash) para conservar commits individuales. git tag entrega-1.",Ruby Alvarez,gitops,2026-10-24
+Entregar reporte y soportes,Task,,Entrega 1,"Subir reporte y soportes (enlaces a repos Git y DVC, EDA, maqueta).",Ruby Alvarez,entrega1,2026-10-25
