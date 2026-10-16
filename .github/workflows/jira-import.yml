@@ -9,19 +9,31 @@ on:
       dry_run:
         description: "Solo simular (true/false)"
         default: "true"
+      debug:
+        description: "Logging detallado (true/false)"
+        default: "false"
 
 permissions:
   contents: read
 
+# Evita dos ejecuciones simultaneas que podrian duplicar tareas.
+concurrency:
+  group: jira-import
+  cancel-in-progress: false
+
 jobs:
   crear-tareas:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - run: pip install requests
+
       - name: Importar tareas
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
@@ -30,4 +42,17 @@ jobs:
           JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
           CSV_PATH: ${{ inputs.csv_path }}
           DRY_RUN: ${{ inputs.dry_run }}
+          DEBUG: ${{ inputs.debug }}
+          LOG_FILE: jira_import.log
+          PYTHONUNBUFFERED: "1"
         run: python scripts/jira_import.py
+
+      # Guarda el log completo (nivel DEBUG) aunque el paso anterior falle.
+      - name: Subir log como artefacto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jira-import-log
+          path: jira_import.log
+          retention-days: 7
+          if-no-files-found: ignore
