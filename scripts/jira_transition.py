@@ -1,12 +1,16 @@
 """Mueve incidencias de Jira segun eventos de GitHub (rama creada, PR abierto, PR mergeado).
 
-Eventos soportados (se lee el JSON de GITHUB_EVENT_PATH):
-  create (rama)                      -> In Progress
-  pull_request opened/reopened/
-                 ready_for_review    -> In Review   (si es borrador -> In Progress)
-  pull_request closed + merged       -> Done
-  pull_request closed sin merge      -> In Progress (solo si estaba en In Review)
-  workflow_dispatch                  -> ISSUE_KEY y TARGET_STATUS (para probar a mano)
+Eventos de Git que mueven la tarea (se lee el JSON de GITHUB_EVENT_PATH):
+  rama creada (con la clave en su nombre)     -> In Progress  (inicio del desarrollo)
+  PR abierto/reabierto en BORRADOR            -> In Progress  (en desarrollo)
+  commits nuevos en un PR en borrador         -> In Progress
+  PR vuelto a borrador (converted_to_draft)   -> In Progress  (solo si estaba en In Review)
+  PR abierto/reabierto LISTO, o ready_for_review -> In Review
+  commits nuevos en un PR listo               -> sin cambios (sigue en revision)
+  PR cerrado y mergeado                       -> Done
+  PR cerrado sin merge                        -> In Progress  (solo si estaba en In Review)
+  workflow_dispatch                           -> ISSUE_KEY y TARGET_STATUS (para probar a mano)
+Un push suelto (sin crear rama ni PR) NO mueve ninguna tarea.
 
 La clave (ej. DM-12) se busca en el nombre de la rama y en el titulo del PR.
 Reglas de seguridad: nunca retrocede una tarea que esta en Done, y nunca falla
@@ -132,7 +136,7 @@ def load_event():
 def decide(event):
     """Devuelve (texto donde buscar claves, estado destino, permitir_retroceso, motivo) o None."""
     if EVENT_NAME == "create":
-        if event.get("ref_type") != "branch":
+        if event.get("ref_type") != "branch":  # ignorar etiquetas (tags)
             return None
         ref = event.get("ref", "")
         return ref, ST_PROGRESS, False, f"rama creada: {ref}"
@@ -142,10 +146,19 @@ def decide(event):
         action = event.get("action", "")
         text = f"{pr.get('head', {}).get('ref', '')} {pr.get('title', '')}"
         label = f"PR #{pr.get('number')} {action}"
-        if action in ("opened", "reopened", "ready_for_review"):
-            if pr.get("draft"):
-                return text, ST_PROGRESS, False, f"{label} (borrador)"
+        draft = bool(pr.get("draft"))
+        if action in ("opened", "reopened"):
+            if draft:
+                return text, ST_PROGRESS, False, f"{label} (borrador: en desarrollo)"
             return text, ST_REVIEW, False, label
+        if action == "ready_for_review":
+            return text, ST_REVIEW, False, label
+        if action == "converted_to_draft":
+            return text, ST_PROGRESS, True, f"{label} (vuelve a desarrollo)"
+        if action == "synchronize":  # commits nuevos subidos al PR
+            if draft:
+                return text, ST_PROGRESS, False, f"{label} (commits nuevos en borrador)"
+            return None  # PR listo: los commits nuevos no cambian el estado
         if action == "closed":
             if pr.get("merged"):
                 return text, ST_DONE, False, f"{label} (mergeado)"
