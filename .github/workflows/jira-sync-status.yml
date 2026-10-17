@@ -1,15 +1,16 @@
 name: Sincronizar estado con Jira
 
 # Mueve la tarea de Jira segun lo que pasa en Git (cuesta 0 ejecuciones de Jira Automation):
-#   rama creada          -> In Progress
-#   PR abierto           -> In Review
-#   PR mergeado          -> Done
+#   rama creada                                    -> In Progress
+#   PR en borrador (o commits nuevos en borrador)  -> In Progress
+#   PR listo para revision                         -> In Review
+#   PR mergeado                                    -> Done
 # La clave (ej. DM-12) debe estar en el nombre de la rama o en el titulo del PR.
 
 on:
   create:
   pull_request:
-    types: [opened, reopened, ready_for_review, closed]
+    types: [opened, reopened, ready_for_review, converted_to_draft, synchronize, closed]
     branches: [dev, main]
   workflow_dispatch:
     inputs:
